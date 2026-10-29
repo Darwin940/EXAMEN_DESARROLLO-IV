@@ -1,0 +1,51 @@
+@host = http://localhost:9090/api
+@uri = {{host}}/cursos
+
+GET {{uri}}
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "codigo_curso": "IF-4001",
+    "nombre": "Desarrollo de Software IV",
+    "creditos": 4,
+    "cupo_maximo": 30,
+    "estado": true
+}
+###
+
+GET {{uri}}/1
+###
+
+PUT {{uri}}/1
+Content-Type: application/json
+
+{
+    "nombre": "Desarrollo de Software III",
+    "creditos": 4,
+    "cupo_maximo": 30,
+    "estado": true
+}
+###
+
+DELETE {{uri}}/1
+###
+
+POST {{uri}}
+Content-Type: application/json
+
+{
+    "codigo_curso": "",
+    "nombre": "A",
+    "creditos": -1,
+    "cupo_maximo": 0
+}
+###
+
+GET {{uri}}/1
+###
+
+DELETE {{uri}}/1
+###

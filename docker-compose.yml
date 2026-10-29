@@ -1,0 +1,44 @@
+services:
+  dcddb:
+    image: mysql:9.7
+    container_name: dcddb
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_DATABASE: db_matricula
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db_dump:/docker-entrypoint-initdb.d
+      - ./mysql:/var/lib/mysql
+    secrets:
+      - db_password
+  dcddatos:
+    container_name: dcddatos
+    environment:
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - ./Data/public:/var/www/html/public
+      - ./Data/src:/var/www/html/src
+    build:
+      context: .
+      dockerfile: ./Data/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - dcddb
+  dcdnegocio:
+    container_name: dcdnegocio
+    volumes:
+      - ./Business/public:/var/www/html/public
+      - ./Business/src:/var/www/html/src
+      - ./Business/tests:/var/www/html/tests
+    build:
+      context: .
+      dockerfile: ./Business/Dockerfile
+    ports:
+      - 9090:80
+    depends_on:
+      - dcddatos
+secrets:
+  db_password:
+    file: ./db_password.txt

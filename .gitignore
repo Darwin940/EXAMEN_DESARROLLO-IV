@@ -1,2 +1,4 @@
 mysql/
 **/vendor/
+.gitignore
+.db_password
