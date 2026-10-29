@@ -1,4 +1,4 @@
 mysql/
 **/vendor/
-.gitignore
-.db_password
+db_password.txt
+Enlace github.txt
